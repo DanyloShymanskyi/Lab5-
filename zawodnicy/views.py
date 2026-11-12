@@ -28,3 +28,8 @@ def api_zawodnicy(request):
         ]
     }
     return JsonResponse(dane)
+
+def lista_zawodnikow_api(request):
+    zawodnicy = Zawodnik.objects.filter(aktywny_w_grze=True).order_by('imie_nazwisko')[:5]
+    dane = list(zawodnicy.values('imie_nazwisko', 'druzyna', 'pozycja', 'wzrost', 'kategoria'))
+    return JsonResponse({'zawodnicy': dane})
